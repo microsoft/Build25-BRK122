@@ -59,7 +59,7 @@ Add your likeness (optional)
 |:-------------------|:----------------------------------|:-------------------|
 | Build session page | https://build.microsoft.com/sessions/BRK122 | Event session page with downloadable recording, slides, resources, and speaker bio |
 | Session recording on YouTube | https://aka.ms/build2025/video/BRK122 | YouTube page with session recoding and speaker-moderated chat |
-|Microsoft Learn|aka.ms/build25/plans/friendlyname<br>aka.ms/build25/collection/friendlyname|Official Collection or Plan with skilling resources to learn at your own pace|
+|Microsoft Learn|https://aka.ms/build25/plan/ADAI_DevStartPlan|Official Collection or Plan with skilling resources to learn at your own pace|
 
 
 ## Contributing
