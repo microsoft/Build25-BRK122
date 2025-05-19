@@ -14,14 +14,6 @@
 - Fill out the rest of this readme as needed.
 - Use subfolders necessary for delivering your call to action. Delete any unused folders.
 - Do not substitute official product documentation posted on learn with content posted in this repo.  Official product documentation belongs on Learn only.
-- In session resources below, add a link back to your session on the build website so people can find you there.
-- All source code files need to include following header:
-  
-    ```
-    Copyright (c) Microsoft Corporation. 
-    
-    Licensed under the MIT license.
-    ```
  - Review SUPPORT.md and make any additions you'd like to support for help.
    
 ## Elevating your permissions
