@@ -11,8 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Demo.ApiService\Demo.ApiService.csproj" />
-    <ProjectReference Include="..\Demo.Web\Demo.Web.csproj" />
+    <ProjectReference Include="../Demo.Catalog/Demo.Catalog.csproj" />
   </ItemGroup>
 
   <ItemGroup>
