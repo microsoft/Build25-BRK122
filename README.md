@@ -1,58 +1,30 @@
-# Welcome Build Speakers!
-
-- You are the direct owner of this repo!  Check it out at [https://repos.opensource.microsoft.com/orgs/microsoft/repos/<this-repo>](https://repos.opensource.microsoft.com/orgs/microsoft/repos/<this-repo>).
-- Once you find your repo in the open source portal, bookmark that link, because you'll be deleting these instructions before you go live.
-- As an owner, it is your responsibility to release it to the public _and_ maintain it! See Release Steps and Maintaining this repo sections below.
-- Projects, Wiki, and Discussions are disabled in this repo, though you can turn them back on if you wish to support them. 
-- If you have not set this repo to public by the end of build, we will permanently delete it.
-
-## Maintaining this repo
-- As an owner of this repo, its your responsbility to respond to PRs and issues submitted to this repo in less than 2 weeks while it is active.
-- We will archive this repo on July 30th, 2025, unless you opt in to keeping it active and further maintaining it.
-
-## Content to add
-- Fill out the rest of this readme as needed.
-- Use subfolders necessary for delivering your call to action. Delete any unused folders.
-- Do not substitute official product documentation posted on learn with content posted in this repo.  Official product documentation belongs on Learn only.
- - Review SUPPORT.md and make any additions you'd like to support for help.
-   
-## Elevating your permissions
-In order to take administrative steps, including making your repo public, you will need to elevate your account to Admin permissions temporarily.
-1. Visit this repos homepage in the opensource portal at https://repos.opensource.microsoft.com/orgs/microsoft/repos/<this-repo>.
-1. On the right side of the page, under Direct Owner access, click Elevate your access and follow the prompts for Just-in time access.
-1. Come back to github, and refresh the repo.  You should see a new Settings tab.
-
-## Release Steps
-1. Make sure you've followed steps at [https://docs.opensource.microsoft.com/releasing/](https://docs.opensource.microsoft.com/releasing/) regarding the release of your code.
-1. When you're ready to set the repo live:
-1. Make sure this "using this repo" section of the readme is deleted, e.g. everything above the banner graphic.
-1. Elevate your permissions to the repo in the open source portal.
-1. Come back to github, and click on the repo's `Settings` tab.
-1. Scroll down to the danger zone and click to change visibility of the repo.  Make the repos visibility `Public`.
-
 <p align="center">
 <img src="img/banner.jpg" alt="decorative banner" width="1200"/>
 </p>
 
-# Build25 [SESSION ID] - [SESSION TITLE]
+# Build25 BRK122 - The future of web development with ASP.NET Core & Blazor
 
 ## Description
 
-Add your session description and information.  Feel free to retitle this heading.
+Explore the future of web development, focusing on new features in ASP.NET Core & Blazor.
+Learn how ASP.NET Core in makes it easier to build secure AI infused web apps with the latest
+AI libraries and security standards, like WebAuthn & Passkey support.
+See how you can more easily monitor and diagnose issues with improved diagnostics and telemetry
+and boost developer productivity with .NET Aspire.
+We will also take a look into the future of Blazor for building web apps, OpenAPI generation, and more.
 
 ## Content Owners
 
-Add Speaker name(s) and titles (required)
-Add your likeness (optional)
+Daniel Roth, ASP.NET Core Product Manager<br>
+Mike Kistler, ASP.NET Core Product Manager<br>
 
-## Session Resources 
+## Session Resources
 
 | Resources          | Links                             | Description        |
 |:-------------------|:----------------------------------|:-------------------|
 | Build session page | https://build.microsoft.com/sessions/BRK122 | Event session page with downloadable recording, slides, resources, and speaker bio |
 | Session recording on YouTube | https://aka.ms/build2025/video/BRK122 | YouTube page with session recoding and speaker-moderated chat |
-|Microsoft Learn|https://aka.ms/build25/plan/ADAI_DevStartPlan|Official Collection or Plan with skilling resources to learn at your own pace|
-
+| Microsoft Learn | https://aka.ms/build25/plan/ADAI_DevStartPlan | Official Collection or Plan with skilling resources to learn at your own pace |
 
 ## Contributing
 
@@ -68,6 +40,5 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
-## Trademarks 
+## Trademarks
 This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow Microsoft’s Trademark & Brand Guidelines. Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party’s policies.
-
