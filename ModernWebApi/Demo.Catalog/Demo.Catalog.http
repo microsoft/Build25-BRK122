@@ -90,3 +90,8 @@ content-type: application/json
   "maxStockThreshold": 250,
   "onReorder": false
 }
+
+### Get items by id with no ids
+
+GET {{HostAddress}}/catalog/items/by
+Accept: application/json
