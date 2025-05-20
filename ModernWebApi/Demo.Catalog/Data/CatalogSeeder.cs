@@ -4,11 +4,32 @@ using Catalog.Models;
 
 namespace Catalog.Data;
 
-public partial class CatalogContextSeed(
-    IWebHostEnvironment env,
-    ILogger<CatalogContextSeed> logger) : IDbSeeder<CatalogContext>
+public static class CatalogSeeder
 {
-    public async Task SeedAsync(CatalogContext context)
+    public static async Task Seed(WebApplication app)
+    {
+        // Create and seed the database
+        using (var scope = app.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+            var logger = services.GetRequiredService<ILogger<Program>>();
+            try
+            {
+                var context = services.GetRequiredService<CatalogContext>();
+                context.Database.EnsureCreated();
+
+                await SeedAsync(context, app.Environment);
+                logger.LogInformation("Catalog seeding complete.");
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while initializing the database.");
+            }
+        }
+
+    }
+
+    public static async Task SeedAsync(CatalogContext context, IWebHostEnvironment env)
     {
         var contentRootPath = env.ContentRootPath;
         var picturePath = env.WebRootPath;
@@ -25,16 +46,17 @@ public partial class CatalogContextSeed(
                 Name = source.Name,
                 Description = source.Description,
                 Price = source.Price,
+                Sku = source.Sku,
                 CatalogBrand = source.Brand,
                 CatalogType = source.Type,
                 AvailableStock = 100,
                 MaxStockThreshold = 200,
                 RestockThreshold = 10,
+                RestockAmount = 50,
                 PictureFileName = $"{source.Id}.webp",
             }).ToArray();
 
             await context.CatalogItems.AddRangeAsync(catalogItems);
-            logger.LogInformation("Seeded catalog with {NumItems} items", context.CatalogItems.Count());
             await context.SaveChangesAsync();
         }
     }
@@ -47,10 +69,6 @@ public partial class CatalogContextSeed(
         public string? Name { get; set; }
         public string? Description { get; set; }
         public decimal Price { get; set; }
+        public string? Sku { get; set; }
     }
-}
-
-public interface IDbSeeder<in TContext> where TContext : DbContext
-{
-    Task SeedAsync(TContext context);
 }

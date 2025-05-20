@@ -14,6 +14,8 @@ public class CatalogContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.ApplyConfiguration(new CatalogItemEntityTypeConfiguration());
+        // Add index on Name property
+        builder.Entity<CatalogItem>()
+            .HasIndex(ci => ci.Name);
     }
 }
