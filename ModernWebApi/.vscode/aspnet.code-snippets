@@ -1,0 +1,17 @@
+{
+  // top-level filename is arbitrary (e.g. csharp.json or my-snippets.code-snippets)
+  "Generate XML Doc File": {
+    "scope": "xml",
+    "prefix": ">xmldoc",              // the trigger text
+    "body": [
+        "  <PropertyGroup>",
+        "    <!-- Enable XML documentation file generation -->",
+        "    <GenerateDocumentationFile>true</GenerateDocumentationFile>",
+        "    <!-- Suppress CS1591 Missing XML comment for publicly visible type or member -->",
+        "    <NoWarn>$(NoWarn);1591</NoWarn>",
+        "  </PropertyGroup>",
+        "",
+    ],
+    "description": "Build setting to generate XML documentation file for C# projects",
+  }
+}
