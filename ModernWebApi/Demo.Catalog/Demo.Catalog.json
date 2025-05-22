@@ -10,10 +10,13 @@
         "tags": [
           "CatalogApi"
         ],
+        "summary": "List catalog items.",
+        "description": "Get a paginated list of items in the catalog.",
         "parameters": [
           {
             "name": "name",
             "in": "query",
+            "description": "The name of the item to return",
             "schema": {
               "type": "string"
             }
@@ -21,6 +24,7 @@
           {
             "name": "type",
             "in": "query",
+            "description": "The type of items to return",
             "schema": {
               "type": "string"
             }
@@ -28,6 +32,7 @@
           {
             "name": "brand",
             "in": "query",
+            "description": "The brand of items to return",
             "schema": {
               "type": "string"
             }
@@ -78,7 +83,10 @@
         "tags": [
           "CatalogApi"
         ],
+        "summary": "Create a catalog item",
+        "description": "Create a new item in the catalog",
         "requestBody": {
+          "description": "The item to create",
           "content": {
             "application/json": {
               "schema": {
@@ -110,12 +118,16 @@
         "tags": [
           "CatalogApi"
         ],
+        "summary": "Batch get catalog items",
+        "description": "Get multiple items from the catalog",
         "parameters": [
           {
             "name": "ids",
             "in": "query",
+            "description": "The ids of the items to return",
             "required": true,
             "schema": {
+              "minItems": 1,
               "type": "array",
               "items": {
                 "type": "integer",
@@ -156,10 +168,13 @@
         "tags": [
           "CatalogApi"
         ],
+        "summary": "Get a catalog item by id",
+        "description": "Get a single item from the catalog",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "The id of the item to return",
             "required": true,
             "schema": {
               "type": "integer",
@@ -193,72 +208,17 @@
           }
         }
       },
-      "patch": {
-        "tags": [
-          "CatalogApi"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/JsonPatchDocumentOfCatalogItem"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CatalogItem"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      },
       "delete": {
         "tags": [
           "CatalogApi"
         ],
+        "summary": "Delete a catalog item",
+        "description": "Delete a single item from the catalog",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "The id of the item to delete",
             "required": true,
             "schema": {
               "type": "integer",
@@ -281,10 +241,13 @@
         "tags": [
           "CatalogApi"
         ],
+        "summary": "Get a catalog item picture by id",
+        "description": "Get a single item picture from the catalog",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "The id of the item to return",
             "required": true,
             "schema": {
               "type": "integer",
@@ -368,119 +331,104 @@
   "components": {
     "schemas": {
       "CatalogItem": {
+        "required": [
+          "name",
+          "description",
+          "sku",
+          "price",
+          "catalogType",
+          "catalogBrand"
+        ],
         "type": "object",
         "properties": {
           "id": {
             "type": "integer",
+            "description": "Unique identifier for the catalog item.",
             "format": "int32"
           },
           "name": {
+            "maxLength": 50,
+            "minLength": 3,
             "type": [
               "null",
               "string"
-            ]
+            ],
+            "description": "Name of the product."
           },
           "description": {
+            "maxLength": 500,
+            "minLength": 10,
             "type": [
               "null",
               "string"
-            ]
+            ],
+            "description": "Detailed description of the product."
           },
           "sku": {
+            "pattern": "^[0-9]{4}-[0-9]{4}$",
             "type": [
               "null",
               "string"
-            ]
+            ],
+            "description": "Product's unique code or SKU"
           },
           "price": {
+            "maximum": 10000,
+            "minimum": 0.01,
             "type": "number",
+            "description": "Current price of the product.",
             "format": "double"
           },
           "pictureFileName": {
             "type": [
               "null",
               "string"
-            ]
+            ],
+            "description": "Filename of the product image."
           },
           "catalogType": {
+            "maxLength": 100,
             "type": [
               "null",
               "string"
-            ]
+            ],
+            "description": "Category or type of the product."
           },
           "catalogBrand": {
+            "maxLength": 100,
             "type": [
               "null",
               "string"
-            ]
+            ],
+            "description": "Brand of the product."
           },
           "availableStock": {
             "type": "integer",
+            "description": "Current quantity available in stock.",
             "format": "int32"
           },
           "restockThreshold": {
             "type": "integer",
+            "description": "Available stock at which we should reorder.",
             "format": "int32"
           },
           "restockAmount": {
             "type": "integer",
+            "description": "Number of units to order when restocking.",
             "format": "int32"
           },
           "maxStockThreshold": {
             "type": "integer",
+            "description": "Maximum number of units that can be in-stock at any time (due to physical/logistical constraints in warehouses).",
             "format": "int32"
           },
           "onReorder": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Indicates whether the item is currently in the process of being restocked."
           }
-        }
+        },
+        "description": "Represents an item in the catalog with detailed product information."
       },
-      "HttpValidationProblemDetails": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": [
-              "null",
-              "string"
-            ]
-          },
-          "title": {
-            "type": [
-              "null",
-              "string"
-            ]
-          },
-          "status": {
-            "type": [
-              "null",
-              "integer"
-            ],
-            "format": "int32"
-          },
-          "detail": {
-            "type": [
-              "null",
-              "string"
-            ]
-          },
-          "instance": {
-            "type": [
-              "null",
-              "string"
-            ]
-          },
-          "errors": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
-      "JsonPatchDocumentOfCatalogItem": { },
       "PaginatedItemsOfCatalogItem": {
         "required": [
           "pageIndex",
@@ -492,23 +440,28 @@
         "properties": {
           "pageIndex": {
             "type": "integer",
+            "description": "Gets the zero-based index of current page.",
             "format": "int32"
           },
           "pageSize": {
             "type": "integer",
+            "description": "Number of items per page",
             "format": "int32"
           },
           "count": {
             "type": "integer",
+            "description": "Total number of items across all pages",
             "format": "int64"
           },
           "data": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/CatalogItem"
-            }
+            },
+            "description": "Collection of items for the current page"
           }
-        }
+        },
+        "description": "Represents a paginated collection of items for use in API responses."
       },
       "ProblemDetails": {
         "type": "object",
