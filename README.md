@@ -26,6 +26,14 @@ Mike Kistler, ASP.NET Core Product Manager<br>
 | Session recording on YouTube | https://aka.ms/build2025/video/BRK122 | YouTube page with session recoding and speaker-moderated chat |
 | Microsoft Learn | https://aka.ms/build25/plan/ADAI_DevStartPlan | Official Collection or Plan with skilling resources to learn at your own pace |
 
+## More Resources
+
+- Try out .NET 10 today! [get.dot.net/10](https://get.dot.net/10)
+- What’s new: [learn.microsoft.com/dotnet/core/whats-new](https://learn.microsoft.com/dotnet/core/whats-new)
+- Roadmap: [aka.ms/dotnet/roadmap]()(https://aka.ms/dotnet/roadmap)
+- .NET AI: [dot.net/ai](https://dot.net/ai)
+- .NET Aspire: [dot.net/aspire](https://dot.net/aspire)
+
 ## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
