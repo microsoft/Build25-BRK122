@@ -1,0 +1,300 @@
+@HostAddress = https://localhost:7516
+
+// ===========================================
+// Basic Health and Schema Checks
+// ===========================================
+
+### Get API Health
+GET {{HostAddress}}/health
+
+### Get OpenAPI Schema
+GET {{HostAddress}}/openapi/v1.json
+Accept: application/json
+
+// ===========================================
+// GET /catalog/items - List Items
+// ===========================================
+
+### Get all catalog items (default pagination)
+GET {{HostAddress}}/catalog/items
+Accept: application/json
+
+### Filter items by name
+GET {{HostAddress}}/catalog/items?name=Running
+Accept: application/json
+
+### Filter items by type
+GET {{HostAddress}}/catalog/items?type=Footwear
+Accept: application/json
+
+### Filter items by brand
+GET {{HostAddress}}/catalog/items?brand=Zephyr
+Accept: application/json
+
+### Custom pagination - page size
+GET {{HostAddress}}/catalog/items?pageSize=5
+Accept: application/json
+
+### Custom pagination - page index
+GET {{HostAddress}}/catalog/items?pageIndex=2&pageSize=5
+Accept: application/json
+
+### Combined filters and pagination
+GET {{HostAddress}}/catalog/items?type=Footwear&brand=Zephyr&pageSize=5&pageIndex=1
+Accept: application/json
+
+### ERROR: Invalid pagination - negative pageSize
+GET {{HostAddress}}/catalog/items?pageSize=-5
+Accept: application/json
+
+### ERROR: Invalid pagination - negative pageIndex
+GET {{HostAddress}}/catalog/items?pageIndex=-1
+Accept: application/json
+
+### ERROR: Invalid pagination - non-integer values
+GET {{HostAddress}}/catalog/items?pageSize=abc&pageIndex=def
+Accept: application/json
+
+// ===========================================
+// GET /catalog/items/{id} - Get Item by ID
+// ===========================================
+
+### Get existing item by id
+GET {{HostAddress}}/catalog/items/1
+Accept: application/json
+
+### ERROR: Get non-existent item (should return 404)
+GET {{HostAddress}}/catalog/items/999999
+Accept: application/json
+
+### ERROR: Invalid ID format (non-integer)
+GET {{HostAddress}}/catalog/items/abc
+Accept: application/json
+
+// ===========================================
+// GET /catalog/items/by - Batch Get by IDs
+// ===========================================
+
+### Get multiple items by IDs
+GET {{HostAddress}}/catalog/items/by?ids=1&ids=2&ids=3
+Accept: application/json
+
+### ERROR: Missing required IDs parameter
+GET {{HostAddress}}/catalog/items/by
+Accept: application/json
+
+### ERROR: Empty IDs array (minimum 1 required)
+GET {{HostAddress}}/catalog/items/by?ids=
+Accept: application/json
+
+### ERROR: Invalid ID format in array
+GET {{HostAddress}}/catalog/items/by?ids=1&ids=abc&ids=3
+Accept: application/json
+
+### Mix of valid and invalid IDs
+GET {{HostAddress}}/catalog/items/by?ids=1&ids=999999&ids=2
+Accept: application/json
+
+// ===========================================
+// POST /catalog/items - Create Item
+// ===========================================
+
+### Create a valid catalog item
+POST {{HostAddress}}/catalog/items
+Content-Type: application/json
+
+{
+  "name": "Test Running Shoes",
+  "description": "Lightweight running shoes for professional athletes.",
+  "sku": "1234-5678",
+  "price": 199.99,
+  "pictureFileName": "test.webp",
+  "catalogType": "Footwear",
+  "catalogBrand": "TestBrand",
+  "availableStock": 100,
+  "restockThreshold": 10,
+  "restockAmount": 50,
+  "maxStockThreshold": 200,
+  "onReorder": false
+}
+
+### ERROR: Missing required fields
+POST {{HostAddress}}/catalog/items
+Content-Type: application/json
+
+{
+  "name": "Incomplete Item",
+  "price": 19.99
+}
+
+### ERROR: Invalid name (too short, min length 3)
+POST {{HostAddress}}/catalog/items
+Content-Type: application/json
+
+{
+  "name": "AB",
+  "description": "Description is long enough to be valid.",
+  "sku": "1234-5678",
+  "price": 99.99,
+  "catalogType": "Footwear",
+  "catalogBrand": "TestBrand"
+}
+
+### ERROR: Invalid name (too long, max length 50)
+POST {{HostAddress}}/catalog/items
+Content-Type: application/json
+
+{
+  "name": "This name is way too long and exceeds the maximum allowed length of fifty characters for a catalog item name",
+  "description": "Valid description",
+  "sku": "1234-5678",
+  "price": 99.99,
+  "catalogType": "Footwear",
+  "catalogBrand": "TestBrand"
+}
+
+### ERROR: Invalid description (too short, min length 10)
+POST {{HostAddress}}/catalog/items
+Content-Type: application/json
+
+{
+  "name": "Valid Name",
+  "description": "Too short",
+  "sku": "1234-5678",
+  "price": 99.99,
+  "catalogType": "Footwear",
+  "catalogBrand": "TestBrand"
+}
+
+### ERROR: Invalid description (too long, max length 500)
+POST {{HostAddress}}/catalog/items
+Content-Type: application/json
+
+{
+  "name": "Valid Name",
+  "description": "This description is way too long and exceeds the maximum allowed length of five hundred characters. This is just filler text to make it go over the limit. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. And still adding more text to definitely go over the 500 character limit for sure, beyond any doubt, really making sure we test this validation thoroughly.",
+  "sku": "1234-5678",
+  "price": 99.99,
+  "catalogType": "Footwear",
+  "catalogBrand": "TestBrand"
+}
+
+### ERROR: Invalid SKU format (must match pattern ^[0-9]{4}-[0-9]{4}$)
+POST {{HostAddress}}/catalog/items
+Content-Type: application/json
+
+{
+  "name": "Valid Name",
+  "description": "Valid description for this test item.",
+  "sku": "123-456",
+  "price": 99.99,
+  "catalogType": "Footwear",
+  "catalogBrand": "TestBrand"
+}
+
+### ERROR: Invalid price (below minimum 0.01)
+POST {{HostAddress}}/catalog/items
+Content-Type: application/json
+
+{
+  "name": "Valid Name",
+  "description": "Valid description for this test item.",
+  "sku": "1234-5678",
+  "price": 0,
+  "catalogType": "Footwear",
+  "catalogBrand": "TestBrand"
+}
+
+### ERROR: Invalid price (above maximum 10000)
+POST {{HostAddress}}/catalog/items
+Content-Type: application/json
+
+{
+  "name": "Valid Name",
+  "description": "Valid description for this test item.",
+  "sku": "1234-5678",
+  "price": 15000,
+  "catalogType": "Footwear",
+  "catalogBrand": "TestBrand"
+}
+
+### ERROR: Invalid catalogType (too long, max length 100)
+POST {{HostAddress}}/catalog/items
+Content-Type: application/json
+
+{
+  "name": "Valid Name",
+  "description": "Valid description for this test item.",
+  "sku": "1234-5678",
+  "price": 99.99,
+  "catalogType": "This category type name is way too long and exceeds the maximum allowed length of one hundred characters which is definitely too much text",
+  "catalogBrand": "TestBrand"
+}
+
+### ERROR: Invalid catalogBrand (too long, max length 100)
+POST {{HostAddress}}/catalog/items
+Content-Type: application/json
+
+{
+  "name": "Valid Name",
+  "description": "Valid description for this test item.",
+  "sku": "1234-5678",
+  "price": 99.99,
+  "catalogType": "Footwear",
+  "catalogBrand": "This brand name is way too long and exceeds the maximum allowed length of one hundred characters which is definitely too much text for a brand"
+}
+
+// ===========================================
+// GET /catalog/items/{id}/pic - Get Item Picture
+// ===========================================
+
+### Get picture of an existing item
+GET {{HostAddress}}/catalog/items/1/pic
+Accept: image/jpeg
+
+### ERROR: Get picture of non-existent item (should return 404)
+GET {{HostAddress}}/catalog/items/999999/pic
+Accept: image/jpeg
+
+### Try different Accept header
+GET {{HostAddress}}/catalog/items/1/pic
+Accept: image/png
+
+### Try another different Accept header
+GET {{HostAddress}}/catalog/items/1/pic
+Accept: image/webp
+
+// ===========================================
+// DELETE /catalog/items/{id} - Delete Item
+// ===========================================
+
+### Delete an existing item
+# Note: You might want to use an ID that's safe to delete in your environment
+DELETE {{HostAddress}}/catalog/items/100
+
+### ERROR: Delete non-existent item (should return 404)
+DELETE {{HostAddress}}/catalog/items/999999
+
+### ERROR: Invalid ID format
+DELETE {{HostAddress}}/catalog/items/abc
+
+// ===========================================
+// Boundary Testing and Edge Cases
+// ===========================================
+
+### Boundary: Get items with maximum allowed pageSize
+GET {{HostAddress}}/catalog/items?pageSize=1000
+Accept: application/json
+
+### Edge case: Unusual but valid item creation (boundary values)
+POST {{HostAddress}}/catalog/items
+Content-Type: application/json
+
+{
+  "name": "Min",
+  "description": "Minimum allowed description length.",
+  "sku": "0000-0000",
+  "price": 0.01,
+  "catalogType": "Min",
+  "catalogBrand": "Min"
+}
