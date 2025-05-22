@@ -1,0 +1,97 @@
+@HostAddress = https://localhost:7516
+
+GET {{HostAddress}}/health
+
+###
+
+GET {{HostAddress}}/openapi/v1.json
+Accept: application/json
+
+###
+
+GET {{HostAddress}}/catalog/items
+Accept: application/json
+
+###
+
+GET {{HostAddress}}/catalog/items/1
+Accept: application/json
+
+###
+
+# A request with an unknown item id returns a 404 NotFound with ProblemDetails response
+
+GET {{HostAddress}}/catalog/items/463
+
+###
+
+GET {{HostAddress}}/catalog/items/{{itemId}}/pic
+Accept: image/jpeg
+
+###
+
+GET {{HostAddress}}/catalog/items?type=Footwear
+
+###
+
+@itemId = 57
+
+GET {{HostAddress}}/catalog/items/{{itemId}}
+Accept: application/json
+
+###
+
+PATCH {{HostAddress}}/catalog/items/{{itemId}}
+Content-Type: application/json-patch+json
+
+[
+  {
+    "op": "replace",
+    "path": "/price",
+    "value": 129.99
+  }
+]
+
+###
+
+PATCH {{HostAddress}}/catalog/items/{{itemId}}
+Content-Type: application/json-patch+json
+
+[
+  {
+    "op": "test",
+    "path": "/availableStock",
+    "value": 99
+  },
+  {
+    "op": "replace",
+    "path": "/availableStock",
+    "value": 98
+  }
+]
+
+### Create a new item
+
+POST {{HostAddress}}/catalog/items
+content-type: application/json
+
+{
+  "id": 157,
+  "name": "Special Order Running Shoes",
+  "description": "Lightweight and breathable running shoes for all-day comfort.",
+  "sku": "5373-5235",
+  "price": 149.99,
+  "pictureFileName": "57.webp",
+  "catalogType": "Footwear",
+  "catalogBrand": "Zephyr",
+  "availableStock": 15,
+  "restockThreshold": 10,
+  "restockAmount": 50,
+  "maxStockThreshold": 250,
+  "onReorder": false
+}
+
+### Get items by id with no ids
+
+GET {{HostAddress}}/catalog/items/by
+Accept: application/json
